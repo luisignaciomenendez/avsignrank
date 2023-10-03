@@ -53,6 +53,9 @@ log on
 if "`4'"=="id"   local appro_ex  "Exact(id)"
 if "`4'"=="mg"   local appro_ex  "Exact"
 
+
+
+
 di  as text "****** T(`1')-n(`2'v`3')-`4'- `appro_ex' Signed ranks ***********************************"
 // n or B here; active n only except n0 means B0 and is 4 or 2
 log off
@@ -135,6 +138,16 @@ di _cont as text "1-si-upper:"   as result %6.3f `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`
 di _cont as text "  N:"            as result `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rN',   
 di _cont as text "Npos:"         as result `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rNpos',   
 di _continue as text _col(115)  "z-stat:", `rz', 	
+
+* Display warning: whenever mg N=6
+
+
+if "`4'"=="mg" & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rN'!=6 {
+        display "Warning: N must be equal to 6 for mg."
+    }
+
+
+
 log off	 
 
 *log close
@@ -144,39 +157,12 @@ local OutputFileName "`filename'.txt"
 
     // Open the output file for writing
     file open myfile using "`OutputFileName'", write text replace
-
-
-
-
-/*
-// Write LaTeX code for the table
-    file write myfile "\begin{table}" _n
-    file write myfile "\centering" _n
-    file write myfile "\begin{tabular}{|c|c|}" _n
-    file write myfile "\hline" _n
-    file write myfile "\textbf{Variable} & \textbf{Value} \\" _n
-    file write myfile "\hline" _n
-    file write myfile "\multirow{2}{*}{p2si} & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_ex' \\ & (`lower',`upper') \\" _n
-    file write myfile "1-si-lower & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_l_ex' \\" _n
-    file write myfile "Npos & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rNpos' \\" _n
-    file write myfile "1-si-upper & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_u_ex' \\" _n
-    file write myfile "N & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rN' \\" _n
-    file write myfile "z-stat & `rz' \\" _n
-	file write myfile " Significance & `significanceis'\\ "_n 
-    file write myfile "\hline" _n
-    file write myfile "\end{tabular}" _n
-    file write myfile "\caption{$ `text' $:`directionT`1'B`2'for_vs`3' --'Signrank test results for  `vars' with    T(`1')-n(`2'v`3')-`4'- `appro_ex'  and Dblock:  `2'}" _n
-    file write myfile "\end{table}" _n
-
-*/
+  
  
-
-
-
-	*file write myfile "\hline" _n
-  
-  
-  file write myfile "$ `text' $, T(`1')-n(`2'v`3')-`4'- `appro_ex'  and Dblock:  `2'   & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_ex' & ( `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_l_ex', `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_u_ex' )`significanceis' & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rNpos'   & `rz' \\ & {(`lower',`upper')} & & &  \\" _n
+		
+		
+		
+  file write myfile "\makecell{$ `text' $ \\ T(`1')\\ Dblocks:  `2'v`3' }  & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_ex' & ( `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_l_ex', `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rp_u_ex' )`significanceis' & `n`2'T`1'vsn`3'T`1'_`v7'`lab5'`lab6'_rNpos'   & `rz' \\ & {(`lower',`upper')} & & &  \\" _n
   
   
   /*
