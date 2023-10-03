@@ -1,0 +1,83 @@
+{smcl}
+{* *! version 1.0 3-10-2023 }{...}
+{viewerdialog avsignrank "dialog avsignrank"}{...}
+{viewerjumpto "Syntax" "avsignrank##syntax"}{...}
+{viewerjumpto "Description" "avsignrank##description"}{...}
+{viewerjumpto "Options" "avsignrank##options"}{...}
+{viewerjumpto "Examples" "avsignrank##examples"}{...}
+
+{p2col:{bf:avsignrank}}Avsign rank test modified. 
+
+{marker syntax}{...}
+{title:Syntax}
+{p}
+{cmd:avsignrak} {Treatment, Block1, Block2 , levels, types012,  condns 7 vars 8 filename}
+
+
+	*input1: Treatment
+	*input2: Block1
+	*input3: Block2
+	*input4: levels
+	*input5: types012
+	*input6: condns
+	*input7: vars
+	*input8: file name to export the stata table	
+
+
+{marker description}{...}
+{title:Description}
+{pstd}
+{cmd:avsignrank} Computes signrank test and outputs latex files with the stored results in tables. By default stata uses ranksum exact (rsex) when there are <25 units as for mg and ranksum (rs) when >=25 as for id. 
+
+{marker options}{...}
+{title:Arguments}
+{phang}{Treatment} It filters the treatment status. Either 1 or 0. 
+
+{phang}{Block1} dblock first group to be compared : Threshold dummy for block parameter.
+
+{phang}{Block2} dblock second group to be compared
+
+
+           T1          T2         ----------T3---------             ----------T4---------             
+           / \        / \        /     /     |    \    \           /     /     |    \    \  
+          /   \      /   \      /     /      |     \    \         /     /      |     \    \      
+pd:     4-15  >15  4-15  >15  4-11  12-19  20-27  28-35 >36     4-11  12-19  20-27  28-35 >36
+         |     |     |     |    |     |      |      |    |       |     |       |      |    |
+dblock:  4     5     4     3    5     4      3      2    1       1     2       3      4    5
+
+ 
+
+
+
+
+{phang}{levels} Either "id" or "mg". Run comparisons at individual or matched group level
+
+{phang}{types012} 0:L ---- 1:H ---- 2:Both
+
+{phang}{conds} "mu" "muH" "muL" "mun"
+
+{phang}{vars} Varlist containing the variables. Variables are typically labeled at the begining of do files:
+
+	-x "Contribution" : Number of H types to contribute
+	-v "Volunteer"    : Dummy for decision to volunteer
+	-a "Activated"    : Dummy for activation
+	-u "Profit"       : Monetary payoff
+	-mu "Type"        : 1 if H, 0 if L 
+
+
+
+	{bf}{IMPORTANT}: The variables above but capitalized stand for the group aggregations. 
+ 
+{phang}{file name} File name to store the .txt file. Importantly, the extension .txt is already included so no need to type it. Relative paths can also be used to change location (see examples below).  
+
+
+
+
+
+
+{marker examples}{...}
+{title:Examples}
+{hline}
+{pstd}Setup
+
+{hline}
